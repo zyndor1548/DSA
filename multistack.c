@@ -12,19 +12,20 @@ struct multistack
     int max;
     int top;
 } stack[10];
-int StackIndex = 0;
+int StackIndex = -1;
 int main()
 {
     printf("enter the number of stacks you want : ");
     scanf("%d", &num);
     for (int i = 0; i < num; i++)
     {
-        printf("Enter number of elements in the stack : ");
+        printf("Enter number of elements in %d th stack : ",i);
         scanf("%d", &elements);
-        if (StackIndex == 0)
+        if (StackIndex == -1)
         {
+            StackIndex += 1;
             stack[StackIndex].min = 0;
-            stack[StackIndex].max = elements;
+            stack[StackIndex].max = elements - 1;
             stack[StackIndex].top = -1;
         }
         else
@@ -32,10 +33,10 @@ int main()
             StackIndex += 1;
             stack[StackIndex].min = stack[StackIndex - 1].max + 1;
             stack[StackIndex].max = stack[StackIndex - 1].max + elements;
-            stack[StackIndex].top = stack[StackIndex - 1].max;
+            stack[StackIndex].top = stack[StackIndex].min - 1;
         }
     }
-
+    display();
     int menu;
     do
     {
@@ -78,8 +79,8 @@ int GetIndex()
 }
 int push(id)
 {
-    if (stack[id].top >= stack[id].max)
-    {
+
+    if (stack[id].top + 1 > stack[id].max) {
         printf("Stack Overflow\n");
         return 0;
     }
@@ -96,8 +97,8 @@ int pop(id)
         printf("Stack Underflow\n");
         return 0;
     }
-    printf("You popped: %d\n", stack_array[stack[id].top--]);
-    stack_array[stack[id].top] = 0;
+    printf("You popped: %d\n", stack_array[stack[id].top]);
+    stack_array[stack[id].top--] = 0;
     return 1;
 }
 
@@ -107,13 +108,13 @@ void display()
     printf("Current stack:\n");
     for (int i = stack[StackIndex].max; i >= 0; i--)
     {
-        for (int j = 0; j < stack[StackIndex].max; j++)
+        for (int j = StackIndex; j >= 0 ; j--)
             if (stack[j].max == i)
             {
+                printf("stack %d\n",j);
                 printf("-----\n");
             }
-        printf("-----\n");
         printf("| %d |\n", stack_array[i]);
+        printf("-----\n");
     }
-    printf("-----\n");
 }

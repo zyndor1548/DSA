@@ -1,10 +1,10 @@
 #include <stdio.h>
 int num, elements;
 int stack_array[400];
-int push(int id);
-int pop(int id);
+void Push(int id);
+void Pop(int id);
 int GetIndex();
-void display();
+void Display();
 #define ID GetIndex()
 struct multistack
 {
@@ -36,7 +36,7 @@ int main()
             stack[StackIndex].top = stack[StackIndex].min - 1;
         }
     }
-    display();
+    Display();
     int menu;
     do
     {
@@ -51,13 +51,13 @@ int main()
         switch (menu)
         {
         case 1:
-            display();
+            Display();
             break;
         case 2:
-            push(ID);
+            Push(ID);
             break;
         case 3:
-            pop(ID);
+            Pop(ID);
             break;
         case 4:
             printf("Exiting...\n");
@@ -77,32 +77,30 @@ int GetIndex()
     scanf("%d", &index);
     return index;
 }
-int push(id)
+void Push(int id)
 {
 
     if (stack[id].top + 1 > stack[id].max) {
         printf("Stack Overflow\n");
-        return 0;
+        return;
     }
     printf("Enter value to push: ");
     scanf("%d", &stack_array[++stack[id].top]);
     printf("Pushed %d to the stack.\n", stack_array[stack[id].top]);
-    return 1;
 }
 
-int pop(id)
+void Pop(int id)
 {
     if (stack[id].top < stack[id].min)
     {
         printf("Stack Underflow\n");
-        return 0;
+        return;
     }
     printf("You popped: %d\n", stack_array[stack[id].top]);
     stack_array[stack[id].top--] = 0;
-    return 1;
 }
 
-void display()
+void Display()
 {
 
     printf("Current stack:\n");

@@ -121,7 +121,7 @@ void display()
         printf("%d --> ", temp->data);
         temp = temp->link;
     }
-    printf("\n");
+    printf("NULL\n");
 }
 
 void Insert_at_first()
@@ -157,7 +157,7 @@ void Insert_in_between()
         Insert_at_first();
         return;
     }
-    struct Node *prev = head->link;
+    struct Node *prev = head;
     ptr = head->link;
     int choice;
     printf("\tLinked List Insertion Between Menu\n");
@@ -251,7 +251,7 @@ void Delete_from_between()
         printf("There is nothing to delete");
         return;
     }
-    struct Node *prev = head->link;
+    struct Node *prev = head;
     ptr = head->link;
     int choice;
     printf("\tLinked List Deletion Between Menu\n");

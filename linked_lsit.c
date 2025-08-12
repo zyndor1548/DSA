@@ -19,7 +19,6 @@ void Delete_from_between();
 void exit_linked_list();
 int main()
 {
-    head = (struct Node *)malloc(sizeof(struct Node));
     create_linked_list();
     int choice, choice2;
     do
@@ -89,23 +88,29 @@ int main()
 }
 void create_linked_list()
 {
+    head = (struct Node *)malloc(sizeof(struct Node));
+    head->link = NULL;
     int elements;
     printf("how many elements do you want to add at first : ");
     scanf("%d", &elements);
-    struct Node *prev;
-    temp = (struct Node *)malloc(sizeof(struct Node));
-    printf("Enter value : ");
-    scanf("%d", &temp->data);
-    head->link = temp;
-    prev = temp;
-    for (int i = 1; i < elements; i++)
+    if (elements != 0)
     {
+        struct Node *prev;
         temp = (struct Node *)malloc(sizeof(struct Node));
-        prev->link = temp;
         printf("Enter value : ");
         scanf("%d", &temp->data);
         temp->link = NULL;
+        head->link = temp;
         prev = temp;
+        for (int i = 1; i < elements; i++)
+        {
+            temp = (struct Node *)malloc(sizeof(struct Node));
+            prev->link = temp;
+            printf("Enter value : ");
+            scanf("%d", &temp->data);
+            temp->link = NULL;
+            prev = temp;
+        }
     }
 }
 void display()
@@ -167,7 +172,7 @@ void Insert_in_between()
         int key;
         printf("Enter key : ");
         scanf("%d", &key);
-        while (ptr->data != key && ptr->link != NULL)
+        while (ptr != NULL && ptr->data != key)
         {
             prev = ptr;
             ptr = ptr->link;
@@ -179,7 +184,13 @@ void Insert_in_between()
         int pos;
         printf("Enter Position : ");
         scanf("%d", &pos);
-        for (int i = 0; i < pos && ptr->link != NULL; i++)
+        if (pos == 0)
+        {
+            Insert_at_first();
+            return;
+        }
+        int i;
+        for (i = 0; ptr != NULL && i < pos; i++)
         {
             prev = ptr;
             ptr = ptr->link;
@@ -187,9 +198,9 @@ void Insert_in_between()
         break;
     }
     }
-    if (ptr->link == NULL)
+    if (ptr == NULL)
     {
-        printf("Key is not in the linked list");
+        printf("Key/position is not in the linked list");
         return;
     }
     temp = (struct Node *)malloc(sizeof(struct Node));
@@ -216,15 +227,21 @@ void Delete_last()
         printf("There is nothing to delete");
         return;
     }
-    struct Node *prev = head->link;
     temp = head->link;
-    while (temp->link != NULL)
+    if (temp->link != NULL)
     {
-        prev = temp;
-        temp = temp->link;
+        struct Node *prev = head->link;
+        while (temp->link != NULL)
+        {
+            prev = temp;
+            temp = temp->link;
+        }
+        prev->link = NULL;
     }
-
-    prev->link = NULL;
+    else
+    {
+        head->link = NULL;
+    }
     free(temp);
 }
 void Delete_from_between()
@@ -235,7 +252,7 @@ void Delete_from_between()
         return;
     }
     struct Node *prev = head->link;
-    temp = head->link;
+    ptr = head->link;
     int choice;
     printf("\tLinked List Deletion Between Menu\n");
     printf("\t1. Delete a value\n");
@@ -249,10 +266,10 @@ void Delete_from_between()
         int key;
         printf("Enter key : ");
         scanf("%d", &key);
-        while (temp->data != key && temp->link != NULL)
+        while (ptr != NULL && ptr->data != key)
         {
-            prev = temp;
-            temp = temp->link;
+            prev = ptr;
+            ptr = ptr->link;
         }
         break;
     }
@@ -261,29 +278,37 @@ void Delete_from_between()
         int pos;
         printf("Enter Position : ");
         scanf("%d", &pos);
-        for (int i = 0; i < pos && temp->link != NULL; i++)
+        if (pos == 0)
         {
-            prev = temp;
-            temp = temp->link;
+            Delete_first();
+            return;
+        }
+        int i;
+        for (i = 0; ptr != NULL && i < pos; i++)
+        {
+            prev = ptr;
+            ptr = ptr->link;
         }
         break;
     }
     }
-    if (temp->link == NULL)
+    if (ptr == NULL)
     {
-        printf("Key/positoin is not in the linked list");
+        printf("Key/position is not in the linked list");
         return;
     }
-    prev->link = temp->link;
-    free(temp);
+    prev->link = ptr->link;
+    free(ptr);
 }
 void exit_linked_list()
 {
     struct Node *temp;
     temp = head->link;
-    while (temp->link != NULL)
+    while (temp != NULL)
     {
+        struct Node *next = temp->link;
         free(temp);
-        temp = temp->link;
+        temp = next;
     }
+    free(head);
 }

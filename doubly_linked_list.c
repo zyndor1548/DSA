@@ -4,7 +4,7 @@
 struct Node
 {
     int data;
-    struct Node *link;
+    struct Node *blink,*flink;
 };
 struct Node *head, *temp, *ptr;
 
@@ -89,7 +89,8 @@ int main()
 void create_linked_list()
 {
     head = (struct Node *)malloc(sizeof(struct Node));
-    head->link = NULL;
+    head->flink = NULL;
+    head->blink = NULL;
     int elements;
     printf("how many elements do you want to add at first : ");
     scanf("%d", &elements);
@@ -99,27 +100,29 @@ void create_linked_list()
         temp = (struct Node *)malloc(sizeof(struct Node));
         printf("Enter value : ");
         scanf("%d", &temp->data);
-        temp->link = NULL;
-        head->link = temp;
+        temp->flink = NULL;
+        temp->blink = head;
+        head->flink = temp;
         prev = temp;
         for (int i = 1; i < elements; i++)
         {
             temp = (struct Node *)malloc(sizeof(struct Node));
-            prev->link = temp;
+            prev->flink = temp;
             printf("Enter value : ");
             scanf("%d", &temp->data);
-            temp->link = NULL;
+            temp->flink = NULL;
+            temp->blink = prev;
             prev = temp;
         }
     }
 }
 void display()
 {
-    temp = head->link;
+    temp = head->flink;
     while (temp != NULL)
     {
-        printf("[%d:%d]--> ", temp->data, temp->link);
-        temp = temp->link;
+        printf("[%d:%d:%d] --> ", temp->blink , temp->data, temp->flink);
+        temp = temp->flink;
     }
     printf("NULL\n");
 }
@@ -127,151 +130,130 @@ void display()
 void Insert_at_first()
 {
     temp = (struct Node *)malloc(sizeof(struct Node));
-    temp->link = head->link;
-    head->link = temp;
+    temp->flink = head->flink;
+    temp->blink = head;
+    head->flink = temp;
     printf("Enter value : ");
     scanf("%d", &temp->data);
 }
 void Insert_at_last()
 {
-    if (head->link == NULL)
+    if (head->flink == NULL)
     {
         Insert_at_first();
         return;
     }
-    ptr = head->link;
-    while (ptr->link != NULL)
+    ptr = head->flink;
+    while (ptr->flink != NULL)
     {
-        ptr = ptr->link;
+        ptr = ptr->flink;
     }
     temp = (struct Node *)malloc(sizeof(struct Node));
-    ptr->link = temp;
-    temp->link = NULL;
+    ptr->flink = temp;
+    temp->flink = NULL;
+    temp->blink = ptr;
     printf("Enter value : ");
     scanf("%d", &temp->data);
 }
 void Insert_in_between()
 {
-    if (head->link == NULL)
+    if (head->flink == NULL)
     {
         Insert_at_first();
         return;
     }
-    struct Node *prev = head;
-    ptr = head->link;
-    int key;
-    printf("Enter key : ");
-    scanf("%d", &key);
-    while (ptr != NULL && ptr->data != key)
+    ptr = head->flink;
+    int choice;
+    printf("\tLinked List Insertion Between Menu\n");
+    printf("\t1. Insert before a value\n");
+    printf("\t2. Insert at position\n");
+    printf("Enter Choice : ");
+    scanf("%d", &choice);
+    switch (choice)
     {
-        prev = ptr;
-        ptr = ptr->link;
+    case 1:
+    {
+        int key;
+        printf("Enter key : ");
+        scanf("%d", &key);
+        while (ptr != NULL && ptr->data != key)
+        {
+            ptr = ptr->flink;
+        }
+        break;
+    }
+    default:
+    {
+        int pos;
+        printf("Enter Position : ");
+        scanf("%d", &pos);
+        if (pos == 0)
+        {
+            Insert_at_first();
+            return;
+        }
+        int i;
+        for (i = 0; ptr != NULL && i < pos; i++)
+        {
+            ptr = ptr->flink;
+        }
+        break;
+    }
     }
     if (ptr == NULL)
     {
-        printf("Key is not in the linked list");
+        printf("Key/position is not in the linked list");
         return;
     }
     temp = (struct Node *)malloc(sizeof(struct Node));
-    prev->link = temp;
-    temp->link = ptr;
+    ptr->blink->flink = temp;
+    temp->blink = ptr->flink;
+    temp->flink = ptr;
     printf("Enter value : ");
     scanf("%d", &temp->data);
 }
-int choice;
-printf("\tLinked List Insertion Between Menu\n");
-printf("\t1. Insert before a value\n");
-printf("\t2. Insert at position\n");
-printf("Enter Choice : ");
-scanf("%d", &choice);
-switch (choice)
-{
-case 1:
-{
-    int key;
-    printf("Enter key : ");
-    scanf("%d", &key);
-    while (ptr != NULL && ptr->data != key)
-    {
-        prev = ptr;
-        ptr = ptr->link;
-    }
-    break;
-}
-default:
-{
-    int pos;
-    printf("Enter Position : ");
-    scanf("%d", &pos);
-    if (pos == 0)
-    {
-        Insert_at_first();
-        return;
-    }
-    int i;
-    for (i = 0; ptr != NULL && i < pos; i++)
-    {
-        prev = ptr;
-        ptr = ptr->link;
-    }
-    break;
-}
-}
-if (ptr == NULL)
-{
-    printf("Key/position is not in the linked list");
-    return;
-}
-temp = (struct Node *)malloc(sizeof(struct Node));
-prev->link = temp;
-temp->link = ptr;
-printf("Enter value : ");
-scanf("%d", &temp->data);
-}
 void Delete_first()
 {
-    if (head->link == NULL)
+    if (head->flink == NULL)
     {
         printf("There is nothing to delete");
         return;
     }
-    temp = head->link;
-    head->link = temp->link;
+    temp = head->flink;
+    head->flink = temp->flink;
+    temp->flink->blink = head;
     free(temp);
 }
 void Delete_last()
 {
-    if (head->link == NULL)
+    if (head->flink == NULL)
     {
         printf("There is nothing to delete");
         return;
     }
-    temp = head->link;
-    if (temp->link != NULL)
+    temp = head->flink;
+    if (temp->flink != NULL)
     {
-        struct Node *prev = head->link;
-        while (temp->link != NULL)
+        while (temp->flink != NULL)
         {
-            prev = temp;
-            temp = temp->link;
+            temp = temp->flink;
         }
-        prev->link = NULL;
+        temp->blink->flink = NULL;
     }
     else
     {
-        head->link = NULL;
+        head->flink = NULL;
     }
     free(temp);
 }
 void Delete_from_between()
 {
-    if (head->link == NULL)
+    if (head->flink == NULL)
     {
         printf("There is nothing to delete");
         return;
     }
-    struct Node *prev = head;
-    ptr = head->link;
+    ptr = head->flink;
     int choice;
     printf("\tLinked List Deletion Between Menu\n");
     printf("\t1. Delete a value\n");
@@ -287,8 +269,7 @@ void Delete_from_between()
         scanf("%d", &key);
         while (ptr != NULL && ptr->data != key)
         {
-            prev = ptr;
-            ptr = ptr->link;
+            ptr = ptr->flink;
         }
         break;
     }
@@ -305,8 +286,7 @@ void Delete_from_between()
         int i;
         for (i = 0; ptr != NULL && i < pos; i++)
         {
-            prev = ptr;
-            ptr = ptr->link;
+            ptr = ptr->flink;
         }
         break;
     }
@@ -316,16 +296,16 @@ void Delete_from_between()
         printf("Key/position is not in the linked list");
         return;
     }
-    prev->link = ptr->link;
+    ptr->blink->flink = ptr->flink;
     free(ptr);
 }
 void exit_linked_list()
 {
     struct Node *temp;
-    temp = head->link;
+    temp = head->flink;
     while (temp != NULL)
     {
-        struct Node *next = temp->link;
+        struct Node *next = temp->flink;
         free(temp);
         temp = next;
     }

@@ -178,56 +178,6 @@ void Insert_in_between()
     printf("Enter value : ");
     scanf("%d", &temp->data);
 }
-int choice;
-printf("\tLinked List Insertion Between Menu\n");
-printf("\t1. Insert before a value\n");
-printf("\t2. Insert at position\n");
-printf("Enter Choice : ");
-scanf("%d", &choice);
-switch (choice)
-{
-case 1:
-{
-    int key;
-    printf("Enter key : ");
-    scanf("%d", &key);
-    while (ptr != NULL && ptr->data != key)
-    {
-        prev = ptr;
-        ptr = ptr->link;
-    }
-    break;
-}
-default:
-{
-    int pos;
-    printf("Enter Position : ");
-    scanf("%d", &pos);
-    if (pos == 0)
-    {
-        Insert_at_first();
-        return;
-    }
-    int i;
-    for (i = 0; ptr != NULL && i < pos; i++)
-    {
-        prev = ptr;
-        ptr = ptr->link;
-    }
-    break;
-}
-}
-if (ptr == NULL)
-{
-    printf("Key/position is not in the linked list");
-    return;
-}
-temp = (struct Node *)malloc(sizeof(struct Node));
-prev->link = temp;
-temp->link = ptr;
-printf("Enter value : ");
-scanf("%d", &temp->data);
-}
 void Delete_first()
 {
     if (head->link == NULL)

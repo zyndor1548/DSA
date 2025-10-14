@@ -115,7 +115,7 @@ The details of students(number, name, total-mark) are to be stored in a linked l
 ### 6. Doubly Linked List Palindrome Check
 Create a Doubly Linked List from a string taking each character from the string. Check if the given string is palindrome in an efficient method.
 
-**Program:** [doubly_linked_list.c](doubly_linked_list.c)
+**Program:** [palindrome_doubly_linkedlist.c](palindrome_doubly_linkedlist.c)
 
 ### 7. Queue Reversal using Stack
 Write a program to reverse the content of queue using stack.

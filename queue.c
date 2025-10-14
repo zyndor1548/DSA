@@ -1,86 +1,65 @@
 #include <stdio.h>
-
-int rear = -1;
-int front = -1;
-int max;
-int q[100];
-
-void enqueue();
-void dequeue();
-void display();
-
-int main() {
-    printf("Enter max queue size : ");
-    scanf("%d", &max);
-
-    int menu;
-    do {
-        printf("\nQueue Menu");
-        printf("\n1. Enqueue");
-        printf("\n2. Dequeue");
-        printf("\n3. Display");
-        printf("\n4. Exit");
-        printf("\nChoose: ");
-        scanf("%d", &menu);
-
-        switch (menu) {
-            case 1:
-                enqueue();
-                break;
-            case 2:
-                dequeue();
-                break;
-            case 3:
-                display();
-                break;
-            case 4:
-                printf("Exiting\n");
-                break;
-            default:
-                printf("Invalid option!\n");
-        }
-    } while (menu != 4);
-
-    return 0;
-}
-
+int front = -1, rear = -1;
+int max, q[50];
 void enqueue() {
-    if (rear + 1 >= max) {
-        printf("Queue Overflow!\n");
-        return;
-    }
-    if (front == -1) front = 0;
-
-    rear += 1;
-    printf("Enter value: ");
-    scanf("%d", &q[rear]);
-    printf("Enqueued: %d\n", q[rear]);
+	if (rear + 1 > max) {
+		printf("queue is overflow\n");
+		return;
+	}
+	if (front == -1) {
+		front = 0;
+	}
+	rear += 1;
+	printf("enter value : ");
+	scanf("%d", &q[rear]);
 }
-
 void dequeue() {
-    if (front == -1) {
-        printf("Queue Underflow!\n");
-        return;
-    }
-
-    printf("Dequeued: %d\n", q[front]);
-    q[front] = 0;
-    front += 1 ;
-
-    if (front > rear) {
-        front = rear = -1;
-    }
+	if (front <= -1) {
+		printf("queue is underflow\n");
+		return;
+	}
+	front += 1;
+	printf("element dequeued\n");
 }
-
 void display() {
-    if (front == -1) {
-        printf("Queue is empty\n");
-        return;
-    }
-
-    printf("Queue elements: ");
-    for (int i = front; i <= rear; i++) {
-        printf("%d ", q[i]);
-    }
-    printf("\n");
+	if (front == -1) {
+		printf("queue is empty\n");
+		return;
+	}
+	printf("queue --> ");
+	for (int i = front; i <= rear; i++) {
+		printf("%d ", q[i]);
+	}
+	printf("\n ");
+}
+int main() {
+	printf("Enter total number of elements in the queue : ");
+	scanf("%d", &max);
+	int menu;
+	do {
+		printf("\tstack menu\n");
+		printf("\t1. display\n");
+		printf("\t2. enqueue\n");
+		printf("\t3. dequeue\n");
+		printf("\t4. exit\n");
+		printf("\t enter choice : ");
+		scanf("%d", &menu);
+		switch (menu) {
+		case 1:
+			display();
+			break;
+		case 2:
+			enqueue();
+			break;
+		case 3:
+			dequeue();
+			break;
+		case 4:
+			printf("exiting...");
+			break;
+		default:
+			printf("Invalid input\n");
+		}
+	} while (menu != 4);
+	return 0;
 }

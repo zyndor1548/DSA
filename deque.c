@@ -1,139 +1,110 @@
 #include <stdio.h>
-int q[10], front = -1, rear = -1, item, m;
-void push();
-void pop();
-void display();
-void inject();
-void eject();
-int main()
-{
-    int choice;
-    printf("operation of double ended queue  \n");
-    printf("enter the size of queue : ");
-    scanf("%d", &m);
-    do
-    {
-        printf("\noperation of double ented queue by TABASSUM VK \n 1.pop() \n 2.push() \n 3.inject() \n 4.eject()\n 5.display()\n 6.exit\n");
-        printf("enter your choice : ");
-        scanf("%d", &choice);
-        switch (choice)
-        {
-        case 1:
-            pop();
-            break;
-        case 2:
-            push();
-            break;
-        case 3:
-            inject();
-            break;
-        case 4:
-            eject();
-            break;
-        case 5:
-            display();
-            break;
-        case 6:
-            break;
-        default:
-            printf("invalid choice try again");
-        }
-    } while (choice != 6);
-    return 0;
+int front = -1, rear = -1;
+int max, q[50];
+void inject() {
+	if ((rear + 1) % max == front) {
+		printf("queue is overflow\n");
+		return;
+	}
+	if (front == -1) {
+		front = 0;
+	}
+	rear = (rear + 1) % max;
+	printf("enter value : ");
+	scanf("%d", &q[rear]);
 }
-void inject()
-{
-    if (front == -1 && rear == -1)
-    {
-        front = 0;
-        rear = 0;
-        printf("enter the value :");
-        scanf("%d", &item);
-        q[rear] = item;
-        printf("enqued sucessfully");
-    }
-    else if (front == (rear + 1) % m)
-        printf("queue is full");
-    else
-    {
-        rear = (rear + 1) % m;
-        printf("enter the value :");
-        scanf("%d", &item);
-        q[rear] = item;
-    }
+void pop() {
+	if (front <= -1) {
+		printf("queue is underflow\n");
+		return;
+	}
+	front = (front + 1) % max;
+	printf("element dequeued\n");
 }
-
-void pop()
-{
-    if (front == -1 && rear == -1)
-        printf("queue is empty");
-    else if (rear == front)
-    {
-        front = -1;
-        rear = -1;
-    }
-    else
-        front = (front + 1) % m;
+void push() {
+	int pos = front;
+	if (front == -1) {
+		pos = 0;
+		rear = 0;
+	} else {
+		if (front == 0) {
+			pos = max - 1;
+		} else {
+			pos = front - 1;
+		}
+		if (pos == rear) {
+			printf("over flow\n");
+			return;
+		}
+	}
+	front = pos;
+	printf("enter value : ");
+	scanf("%d", &q[front]);
 }
-
-void display()
-{
-    if (front == -1 && rear == -1)
-        printf("queue is empty \n");
-    else
-    {
-        for (int i = front; i != rear; i = (i + 1) % m)
-        {
-            printf("%d ", q[i]);
-        }
-        printf("%d\n", q[rear]);
-    }
+void eject() {
+	if (front == -1) {
+		printf("under flow\n");
+		return;
+	}
+	if (front == rear) {
+		front = -1;
+		rear = -1;
+	} else if (rear == 0) {
+		rear = max - 1;
+	} else {
+		rear -= 1;
+	}
+	printf("element dequeued\n");
 }
-void push()
-{
-    int ahead = front;
-    if (front == -1 && rear == -1)
-    {
-        front = 0;
-        rear = 0;
-        printf("enter the value : ");
-        scanf("%d", &item);
-        q[front] = item;
-    }
-    else
-    {
-        if (front == 0)
-            ahead = m - 1;
-        else
-            ahead = front - 1;
-        if (ahead == rear)
-        {
-            printf("overflow \n");
-        }
-        else
-        {
-            front = ahead;
-            printf("enter the value : ");
-            scanf("%d", &item);
-            q[front] = item;
-        }
-    }
+void display() {
+	if (front == -1) {
+		printf("queue is empty\n");
+		return;
+	}
+	printf("queue --> ");
+	int i;
+	for (i = front; i != rear; i = (i + 1) % max) {
+		printf("%d ", q[i]);
+	}
+	printf("%d ", q[i]);
+	printf("\n ");
 }
-void eject()
-{
-    if (rear == -1 && front == -1)
-        printf("underflow");
-    else
-    {
-        item = q[rear];
-        if (front == rear)
-        {
-            front = -1;
-            rear = -1;
-        }
-        else if (rear == 0)
-            rear = m - 1;
-        else
-            rear = rear - 1;
-    }
+int main() {
+	printf("Enter total number of elements in the queue : ");
+	scanf("%d", &max);
+	int menu;
+	do {
+		printf("\tqueue menu\n");
+		printf("\t1. display\n");
+		printf("\t2. push\n");
+		printf("\t3. pop\n");
+		printf("\t4. inject\n");
+		printf("\t5. eject\n");
+		printf("\t6. exit\n");
+		printf("\t enter choice : ");
+		scanf("%d", &menu);
+		switch (menu) {
+		case 1:
+			display();
+			break;
+		case 2:
+			push();
+			break;
+		case 3:
+			pop();
+			break;
+		case 4:
+			inject();
+			break;
+		case 5:
+			eject();
+			break;
+		case 6:
+			printf("exiting...");
+			break;
+		default:
+			printf("Invalid input\n");
+		}
+	} while (menu != 6);
+	return 0;
 }

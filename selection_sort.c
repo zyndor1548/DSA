@@ -1,44 +1,35 @@
 #include <stdio.h>
-int main()
-{
-    int array[50], size;
-    printf("Enter the size of input array : ");
-    scanf("%d", &size);
-    for (int i = 0; i < size; i++)
-    {
-        printf("\nEnter %d element : ", i + 1);
-        scanf("%d", &array[i]);
-    }
-    int min, loc;
-    printf("initial array  :");
-    for (int k = 0; k < size; k++)
-    {
-        printf("%d ", array[k]);
-    }
-    printf("\n");
-    for (int i = 0; i < size; i++)
-    {
-        min = array[i];
-        loc = i;
-        for (int j = i + 1; j < size; j++)
-        {
-            if (min > array[j])
-            {
-                min = array[j];
-                loc = j;
-            }
-        }
-        if (min != array[i])
-        {
-            array[loc] = array[i];
-            array[i] = min;
-        }
-        printf("itreation %d : ", i + 1);
-        for (int k = 0; k < size; k++)
-        {
-            printf("%d ", array[k]);
-        }
-        printf("\n");
-    }
-    return 1;
+int main() {
+	int max, a[50];
+	printf("Enter number of elements in the array : ");
+	scanf("%d", &max);
+	for (int i = 0; i < max; i++) {
+		printf("Enter %d element : ", i);
+		scanf("%d", &a[i]);
+	}
+	printf("Unsorted list : ");
+	for (int i = 0; i < max; i++) {
+		printf("%d ", a[i]);
+	}
+	printf("\n");
+	int min, loc;
+	for (int i = 0; i < max; i++) {
+		min = a[i];
+		loc = i;
+		for (int j = i; j < max; j++) {
+			if (a[i] > a[j]) {
+				min = a[j];
+				loc = j;
+			}
+		}
+		if (min != a[i]) {
+			a[loc] = a[i];
+			a[i] = min;
+		}
+		for (int k = 0; k < max; k++) {
+			printf("%d ", a[k]);
+		}
+		printf("\n");
+	}
+	return 1;
 }

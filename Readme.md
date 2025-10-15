@@ -101,7 +101,7 @@ Implement a Queue using linked list with the operations:
 ### 4. Polynomial Addition using Linked List
 Write a program to read two polynomials and store them using linked list. Calculate the sum of the two polynomials and display the first polynomial, second polynomial and the resultant polynomial.
 
-**Program:** *Not Done*
+**Program:** [polynomial_addition_linked_list.c](polynomial_addition_linked_list.c)
 
 ### 5. Student Details Management
 The details of students(number, name, total-mark) are to be stored in a linked list. Write functions for the following operations:
@@ -110,7 +110,7 @@ The details of students(number, name, total-mark) are to be stored in a linked l
 - Search
 - Display the resultant list after every operation
 
-**Program:** *Not Done*
+**Program:** [student_details.c](student_details.c)
 
 ### 6. Doubly Linked List Palindrome Check
 Create a Doubly Linked List from a string taking each character from the string. Check if the given string is palindrome in an efficient method.

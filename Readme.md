@@ -120,7 +120,7 @@ Create a Doubly Linked List from a string taking each character from the string.
 ### 7. Queue Reversal using Stack
 Write a program to reverse the content of queue using stack.
 
-**Program:** *Not Done*
+**Program:** [queue_reversal.c](queue_reversal.c)
 
 ---
 

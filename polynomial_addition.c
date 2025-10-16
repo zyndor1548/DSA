@@ -2,87 +2,122 @@
 
 struct poly {
 	int co, exp;
-};
+} p1[10], p2[10], sum[20];
+int size_of_a, size_of_b, size_of_sum;
 
-int Input(struct poly a[]);
-int Sum(struct poly a[], int size_of_a, struct poly b[], int size_of_b,
-		struct poly sum[]);
-void Display(struct poly a[], int size);
-
-int main() {
-	struct poly p1[10], p2[10], sum[20];
-	printf("First Polynomial\n");
-	int size_of_a = Input(p1);
-	printf("Second Polynomial\n");
-	int size_of_b = Input(p2);
-	printf("Sum of Polynomials:\n");
-	int size_of_sum = Sum(p1, size_of_a, p2, size_of_b, sum);
-	Display(p1, size_of_a);
-	Display(p2, size_of_b);
-	Display(sum, size_of_sum);
-	return 0;
-}
-
-int Input(struct poly a[]) {
-	int nonzero;
-	printf("Enter number of non-zero elements: ");
-	scanf("%d", &nonzero);
-	for (int i = 0; i < nonzero; i++) {
-		int expo, coef;
-		printf("Enter exponent: ");
-		scanf("%d", &expo);
-		printf("Enter coefficient: ");
-		scanf("%d", &coef);
-		a[i].exp = expo;
-		a[i].co = coef;
-	}
-	return nonzero;
-}
-
-int Sum(struct poly a[], int size_of_a, struct poly b[], int size_of_b,
-		struct poly sum[]) {
+int Sum() {
 	int i = 0, j = 0, k = 0;
 	while (i < size_of_a && j < size_of_b) {
-		if (a[i].exp > b[j].exp) {
-			sum[k].exp = a[i].exp;
-			sum[k].co = a[i].co;
+		if (p1[i].exp > p2[j].exp) {
+			sum[k] = p1[i];
 			k++;
 			i++;
-		} else if (a[i].exp < b[j].exp) {
-			sum[k].exp = b[j].exp;
-			sum[k].co = b[j].co;
+		} else if (p1[i].exp < p2[j].exp) {
+			sum[k] = p2[j];
 			k++;
 			j++;
 		} else {
-			sum[k].exp = a[i].exp;
-			sum[k].co = a[i].co + b[j].co;
+			sum[k].exp = p1[i].exp;
+			sum[k].co = p1[i].co + p2[j].co;
 			i++;
 			j++;
 			k++;
 		}
 	}
 	while (i < size_of_a) {
-		sum[k] = a[i];
+		sum[k] = p1[i];
 		k++;
 		i++;
 	}
 	while (j < size_of_b) {
-		sum[k] = b[j];
+		sum[k] = p2[j];
 		k++;
 		j++;
 	}
 	return k;
 }
 
-void Display(struct poly a[], int size) {
-	for (int i = 0; i < size; i++) {
-		if (a[i].co == 0)
+int main() {
+	printf("First Polynomial\n");
+	printf("Enter number of non-zero elements: ");
+	scanf("%d", &size_of_a);
+	for (int i = 0; i < size_of_a; i++) {
+		printf("Enter coefficient: ");
+		scanf("%d", &p1[i].co);
+		printf("Enter exponent: ");
+		scanf("%d", &p1[i].exp);
+	}
+	printf("Second Polynomial\n");
+	printf("Enter number of non-zero elements: ");
+	scanf("%d", &size_of_b);
+	for (int i = 0; i < size_of_b; i++) {
+		printf("Enter coefficient: ");
+		scanf("%d", &p2[i].co);
+		printf("Enter exponent: ");
+		scanf("%d", &p2[i].exp);
+	}
+
+	size_of_sum = Sum();
+
+	printf("First Polynomial: ");
+	int first = 1;
+	for (int i = 0; i < size_of_a; i++) {
+		if (p1[i].co == 0)
 			continue;
-		if (a[i].exp == 0) {
-			printf("%d", a[i].co);
+		if (!first)
+			printf(" + ");
+		if (p1[i].exp == 0) {
+			printf("%d", p1[i].co);
 		} else {
-			printf("%dx^%d + ", a[i].co, a[i].exp);
+			printf("%dx^%d", p1[i].co, p1[i].exp);
 		}
+		first = 0;
 	}
 	printf("\n");
+
+	printf("Second Polynomial: ");
+	for (int i = 0; i < size_of_b; i++) {
+		if (p2[i].co == 0)
+			continue;
+		if (p2[i].exp == 0) {
+			printf("%d", p2[i].co);
+		} else {
+			printf("%dx^%d", p2[i].co, p2[i].exp);
+		}
+		// Check if there are more non-zero terms ahead
+		int hasMore = 0;
+		for (int j = i + 1; j < size_of_b; j++) {
+			if (p2[j].co != 0) {
+				hasMore = 1;
+				break;
+			}
+		}
+		if (hasMore)
+			printf(" + ");
+	}
+	printf("\n");
+
+	printf("Sum of Polynomials: ");
+	for (int i = 0; i < size_of_sum; i++) {
+		if (sum[i].co == 0)
+			continue;
+		if (sum[i].exp == 0) {
+			printf("%d", sum[i].co);
+		} else {
+			printf("%dx^%d", sum[i].co, sum[i].exp);
+		}
+		// Check if there are more non-zero terms ahead
+		int hasMore = 0;
+		for (int j = i + 1; j < size_of_sum; j++) {
+			if (sum[j].co != 0) {
+				hasMore = 1;
+				break;
+			}
+		}
+		if (hasMore)
+			printf(" + ");
+	}
+	printf("\n");
+
+	return 0;
 }

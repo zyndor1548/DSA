@@ -144,7 +144,7 @@ Implementation of quick sort algorithm.
 ### 4. Heap Sorting Algorithm
 Implementation of heap sorting algorithm.
 
-**Program:** *Not Done*
+**Program:** [heap_sort.c](heap_sort.c)
 
 ### 5. Merge Sorting Algorithm
 Implementation of merge sorting algorithm.

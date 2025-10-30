@@ -11,15 +11,12 @@ void heapify(int size) {
 		int largest = i;
 		int left = 2 * i;
 		int right = 2 * i + 1;
-
 		if (left <= size && heap[left] > heap[largest]) {
 			largest = left;
 		}
-
 		if (right <= size && heap[right] > heap[largest]) {
 			largest = right;
 		}
-
 		if (largest != i) {
 			swap(&heap[i], &heap[largest]);
 			i = largest;
@@ -36,6 +33,11 @@ int main() {
 		printf("enter element : ");
 		scanf("%d", &heap[i]);
 	}
+	printf("Unsorted array : ");
+	for (int i = 1; i < max; i++) {
+		printf("%d ", heap[i]);
+	}
+	printf("\n");
 	t_max = max;
 
 	for (int i = (max - 1) / 2; i >= 1; i--) {
@@ -66,7 +68,7 @@ int main() {
 		t_max -= 1;
 		heapify(t_max - 1);
 	}
-	printf("sorted array : ");
+	printf("Sorted array : ");
 	for (int i = 1; i < max; i++) {
 		printf("%d ", heap[i]);
 	}

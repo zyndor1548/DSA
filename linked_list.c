@@ -58,10 +58,10 @@ int main() {
 				delete_first();
 				break;
 			case 2:
-				delete_from_between();
+				delete_last();
 				break;
 			default:
-				delete_last();
+				delete_from_between();
 				break;
 			}
 			break;

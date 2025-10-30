@@ -70,7 +70,7 @@ void PInsert(char val) {
 	postfix[end++] = val;
 }
 
-void strrev(char *str) {
+void reverseString(char *str) {
 	int length = strlen(str);
 	int start = 0;
 	int end = length - 1;
@@ -90,7 +90,7 @@ int main() {
 	char infix[64];
 	printf("Enter infix string : ");
 	scanf("%s", infix);
-	strrev(infix);
+	reverseString(infix);
 	int len = strlen(infix);
 	infix[len] = '(';
 	infix[++len] = '\0';
@@ -119,7 +119,7 @@ int main() {
 		}
 		PInsert(infix[i]);
 	}
-	strrev(postfix);
+	reverseString(postfix);
 	PInsert('\0');
 	printf("Prefix: %s\n", postfix);
 	free(head);

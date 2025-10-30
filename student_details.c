@@ -74,7 +74,6 @@ void Delete() {
 	free(ptr);
 }
 int main() {
-	printf("running\n");
 	head = (struct STUDENT *)malloc(sizeof(struct STUDENT));
 	head->link = NULL;
 	int choice;

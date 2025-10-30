@@ -17,7 +17,7 @@ int main() {
 		min = a[i];
 		loc = i;
 		for (int j = i; j < max; j++) {
-			if (a[i] > a[j]) {
+			if (a[loc] > a[j]) {
 				min = a[j];
 				loc = j;
 			}
@@ -26,10 +26,11 @@ int main() {
 			a[loc] = a[i];
 			a[i] = min;
 		}
-		for (int k = 0; k < max; k++) {
-			printf("%d ", a[k]);
-		}
-		printf("\n");
 	}
-	return 1;
+	printf("Sorted list : ");
+	for (int i = 0; i < max; i++) {
+		printf("%d ", a[i]);
+	}
+	printf("\n");
+	return 0;
 }

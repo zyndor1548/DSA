@@ -24,10 +24,11 @@ int main() {
 			}
 			a[j + 1] = key;
 		}
-		for (int k = 0; k < max; k++) {
-			printf("%d ", a[k]);
-		}
-		printf("\n");
 	}
-	return 1;
+	printf("Sorted list : ");
+	for (int i = 0; i < max; i++) {
+		printf("%d ", a[i]);
+	}
+	printf("\n");
+	return 0;
 }
